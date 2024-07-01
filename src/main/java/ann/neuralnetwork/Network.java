@@ -3,15 +3,42 @@ package ann.neuralnetwork;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Represents a neural network.
+ */
 public class Network implements Serializable
 {
+    /**
+     * The layers of the network.
+     */
     private final List<Layer> layers;
+    /**
+     * The input layer of the network.
+     */
     private final Layer inputLayer;
+    /**
+     * The output layer of the network.
+     */
     private final Layer outputLayer;
+    /**
+     * The size of the input layer.
+     */
     private final int inputSize;
+    /**
+     * The size of the output layer.
+     */
     private final int outputSize;
+    /**
+     * The learning rate of the network.
+     */
     private final double learningRate;
 
+    /**
+     * Constructs a new network with the specified topology and learning rate.
+     *
+     * @param topology the topology of the network.
+     * @param learningRate the learning rate of the network.
+     */
     public Network(List<Integer> topology, double learningRate)
     {
         assert (topology.size() > 1);
@@ -35,13 +62,24 @@ public class Network implements Serializable
             Layer.joinLayers(previous, current);
         }
     }
-    
+
+    /**
+     * Constructs a new network from the specified backup.
+     *
+     * @param backup the backup to construct the network from.
+     * @throws Exception if the backup is invalid.
+     */
     public Network(Backup backup) throws Exception
     {
         this(backup.getTopology(), backup.getLearningRate());
         deserialize(backup.getWeights());
     }
 
+    /**
+     * Propagates the input forward through the network.
+     *
+     * @param input the input to propagate.
+     */
     private void propagateForward(List<Double> input)
     {
         assert (input.size() == inputSize);
@@ -53,6 +91,11 @@ public class Network implements Serializable
         }
     }
 
+    /**
+     * Propagates the error backward through the network.
+     *
+     * @param desiredOutputs the desired outputs.
+     */
     private void propagateBackward(List<Double> desiredOutputs)
     {
         assert (desiredOutputs.size() == outputSize);
@@ -68,7 +111,14 @@ public class Network implements Serializable
             layers.get(i).updateInputs();
         }
     }
-    
+
+    /**
+     * Computes the output for the specified input.
+     *
+     * @param input the input to compute the output for.
+     * @return the output of the network.
+     * @throws Exception if the input is invalid.
+     */
     public List<Double> computeFor(List<Double> input) throws Exception
     {
         if (input.size() == inputSize)
@@ -81,19 +131,37 @@ public class Network implements Serializable
             throw new Exception("Network.computeFor : incompatible vectors");
         }
     }
-        
+
+    /**
+     * Trains the network with the specified training record.
+     *
+     * @param training the training record.
+     * @throws Exception if the training record is invalid.
+     */
     public void trainRecord(IORecord training) throws Exception
     {
         propagateForward(training.getInputs());
         propagateBackward(training.getOutputs());
     }
-    
+
+    /**
+     * Tests the network with the specified test record.
+     *
+     * @param test the test record.
+     * @return the error of the network.
+     * @throws Exception if the test record is invalid.
+     */
     public double testRecord(IORecord test) throws Exception
     {
         propagateForward(test.getInputs());
         return outputLayer.calculateError(test.getOutputs());
     }
 
+    /**
+     * Returns the learning rate of the network.
+     *
+     * @return the learning rate of the network.
+     */
     @Override
     public String toString()
     {
@@ -110,7 +178,12 @@ public class Network implements Serializable
 
         return description.toString();
     }
-    
+
+    /**
+     * Serializes the network.
+     *
+     * @return the serialized network.
+     */
     public Backup serialize()
     {
         List<Integer> topology = new ArrayList<>(layers.size());
@@ -126,7 +199,13 @@ public class Network implements Serializable
         }
         return new Backup(topology, learningRate, lists);
     }
-    
+
+    /**
+     * Deserializes the network.
+     *
+     * @param weights the serialized network.
+     * @throws Exception if the number of weights is invalid.
+     */
     public void deserialize(List<List<List<Double>>> weights) throws Exception
     {
         if (weights.size() == layers.size())
@@ -143,7 +222,12 @@ public class Network implements Serializable
             throw new Exception("Network.deserialize");
         }
     }
-    
+
+    /**
+     * Returns the topology of the network.
+     *
+     * @return the topology of the network.
+     */
     public List<Integer> getTopology()
     {
         List<Integer> topology = new ArrayList<>(layers.size());

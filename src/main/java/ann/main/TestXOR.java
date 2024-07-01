@@ -7,11 +7,22 @@ import ann.neuralnetwork.IORecord;
 import ann.neuralnetwork.Network;
 
 /**
- *
- * @author Kay Jay O'Nail
+ * Tests a neural network to solve the XOR problem.
  */
 public class TestXOR
 {
+    /**
+     * Default constructor.
+     */
+    public TestXOR()
+    {
+    }
+
+    /**
+     * The entry point of the application.
+     *
+     * @param args the command-line arguments.
+     */
     public static void main(String... args)
     {
         /* Read the backup. */

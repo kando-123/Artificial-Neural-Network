@@ -7,11 +7,22 @@ import ann.neuralnetwork.IORecord;
 import ann.neuralnetwork.Network;
 
 /**
- *
- * @author Kay Jay O'Nail
+ * Trains a neural network to solve the XOR problem.
  */
 public class TrainXOR
 {
+    /**
+     * Default constructor.
+     */
+    public TrainXOR()
+    {
+    }
+
+    /**
+     * The entry point of the application.
+     *
+     * @param args the command-line arguments.
+     */
     public static void main(String[] args)
     {
         /* Prepare the network. */

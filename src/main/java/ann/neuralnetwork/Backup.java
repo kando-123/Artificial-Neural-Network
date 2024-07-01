@@ -9,20 +9,38 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- *
- * @author Kay Jay O'Nail
+ * Represents a backup of a neural network.
  */
 public class Backup
 {
+    /**
+     * The topology of the network.
+     */
     private List<Integer> topology;
+    /**
+     * The learning rate of the network.
+     */
     private double learningRate;
+    /**
+     * The connection weights of the network.
+     */
     private List<List<List<Double>>> weights;
 
+    /**
+     * Constructs a new backup.
+     */
     public Backup()
     {
 
     }
 
+    /**
+     * Constructs a new backup with the specified topology, learning rate, and connection weights.
+     *
+     * @param topology the topology of the network.
+     * @param learningRate the learning rate of the network.
+     * @param weights the connection weights of the network.
+     */
     public Backup(List<Integer> topology, double learningRate, List<List<List<Double>>> weights)
     {
         this.topology = topology;
@@ -30,21 +48,42 @@ public class Backup
         this.weights = weights;
     }
 
+    /**
+     * Returns the topology of the network.
+     *
+     * @return the topology of the network.
+     */
     public List<Integer> getTopology()
     {
         return topology;
     }
 
+    /**
+     * Returns the learning rate of the network.
+     *
+     * @return the learning rate of the network.
+     */
     public double getLearningRate()
     {
         return learningRate;
     }
 
+    /**
+     * Returns the connection weights of the network.
+     *
+     * @return the connection weights of the network.
+     */
     public List<List<List<Double>>> getWeights()
     {
         return weights;
     }
 
+    /**
+     * Saves the backup to the specified file.
+     *
+     * @param path the path of the file to save the backup to.
+     * @return true if the backup was saved successfully, false otherwise.
+     */
     public boolean saveToFile(String path)
     {
         boolean success = true;
@@ -84,6 +123,12 @@ public class Backup
         return success;
     }
 
+    /**
+     * Reads the backup from the specified file.
+     *
+     * @param path the path of the file to read the backup from.
+     * @return true if the backup was read successfully, false otherwise.
+     */
     public boolean readFromFile(String path)
     {
         boolean success = true;

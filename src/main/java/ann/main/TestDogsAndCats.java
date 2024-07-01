@@ -22,19 +22,49 @@ import javax.swing.JPanel;
 import ann.neuralnetwork.Backup;
 import ann.neuralnetwork.Network;
 
+/**
+ * Represents a panel for the neural network.
+ */
 class NetworkPanel extends JPanel implements ActionListener
 {
+    /**
+     * The width of the images.
+     */
     private static final int IMAGE_WIDTH = 448;
+    /**
+     * The height of the images.
+     */
     private static final int IMAGE_HEIGHT = 375;
 
+    /**
+     * The image to classify.
+     */
     private BufferedImage image;
+    /**
+     * The label for the image.
+     */
     private final JLabel imageLabel;
+    /**
+     * The label for the response.
+     */
     private final JLabel responseLabel;
+    /**
+     * The button for the next image.
+     */
     private final JButton button;
 
+    /**
+     * The random number generator.
+     */
     private final Random random;
+    /**
+     * The neural network.
+     */
     private Network network;
 
+    /**
+     * Constructs a new panel for the neural network.
+     */
     public NetworkPanel()
     {
         super();
@@ -59,6 +89,9 @@ class NetworkPanel extends JPanel implements ActionListener
         random = new Random();
     }
 
+    /**
+     * Loads the neural network.
+     */
     public void loadNetwork()
     {
         responseLabel.setText("The network is being loaded...");
@@ -80,6 +113,9 @@ class NetworkPanel extends JPanel implements ActionListener
         button.setEnabled(true);
     }
 
+    /**
+     * Loads an image.
+     */
     public void loadImage()
     {
         String animal = random.nextBoolean() ? "Cats" : "Dogs";
@@ -106,6 +142,11 @@ class NetworkPanel extends JPanel implements ActionListener
         }
     }
 
+    /**
+     * Retrieves the pixels of the image.
+     *
+     * @return the pixels of the image.
+     */
     private List<Double> getPixels()
     {
         List<Double> pixels = new ArrayList<>(IMAGE_WIDTH * IMAGE_HEIGHT);
@@ -121,6 +162,9 @@ class NetworkPanel extends JPanel implements ActionListener
         return pixels;
     }
 
+    /**
+     * Decides whether the image is a cat or a dog.
+     */
     public void decide()
     {
         try
@@ -145,7 +189,12 @@ class NetworkPanel extends JPanel implements ActionListener
             responseLabel.setText(e.getMessage());
         }
     }
-    
+
+    /**
+     * Processes the event.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -158,11 +207,22 @@ class NetworkPanel extends JPanel implements ActionListener
 }
 
 /**
- *
- * @author Kay Jay O'Nail
+ * Represents a test for the neural network.
  */
 public class TestDogsAndCats
 {
+    /**
+     * Default constructor.
+     */
+    public TestDogsAndCats()
+    {
+    }
+
+    /**
+     * The entry point of the application.
+     *
+     * @param args the command-line arguments.
+     */
     public static void main(String... args)
     {
         try

@@ -12,16 +12,36 @@ import javax.imageio.ImageIO;
 import ann.neuralnetwork.*;
 
 /**
- *
- * @author Kay Jay O'Nail
+ * Trains a neural network to classify images of dogs and cats.
  */
 public class TrainDogsAndCats
 {
+    /**
+     * Default constructor.
+     */
+    public TrainDogsAndCats()
+    {
+    }
+
+    /**
+     * The width of the images.
+     */
     public static final int WIDTH = 448;
+    /**
+     * The height of the images.
+     */
     public static final int HEIGHT = 375;
-    
+
+    /**
+     * The image to classify.
+     */
     private static BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
-    
+
+    /**
+     * Returns the pixels of the image.
+     *
+     * @return the pixels of the image.
+     */
     public static List<Double> getPixels()
     {
         List<Double> pixels = new ArrayList<>(WIDTH * HEIGHT);
@@ -36,7 +56,13 @@ public class TrainDogsAndCats
         }
         return pixels;
     }
-    
+
+    /**
+     * Loads an image from the specified path.
+     *
+     * @param path the path of the image.
+     * @return true if the image was loaded successfully, false otherwise.
+     */
     public static boolean loadImage(String path)
     {
         boolean success = true;
@@ -52,7 +78,12 @@ public class TrainDogsAndCats
         }
         return success;
     }
-    
+
+    /**
+     * The entry point of the application.
+     *
+     * @param args the command line arguments.
+     */
     public static void main(String... args)
     {
         System.out.println("Train Dogs & Cats");

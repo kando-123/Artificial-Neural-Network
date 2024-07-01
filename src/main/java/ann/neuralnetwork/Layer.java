@@ -3,10 +3,22 @@ package ann.neuralnetwork;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Represents a layer of neurons in a neural network.
+ */
 public class Layer implements Serializable
 {
+    /**
+     * The neurons of the layer.
+     */
     private final List<Neuron> neurons;
 
+    /**
+     * Constructs a new layer with the specified size and learning rate.
+     *
+     * @param size the size of the layer.
+     * @param learningRate the learning rate of the layer.
+     */
     public Layer(int size, double learningRate)
     {
         assert (size > 0);
@@ -16,8 +28,14 @@ public class Layer implements Serializable
         {
             neurons.add(new Neuron(learningRate));
         }
-    } 
+    }
 
+    /**
+     * Joins the specified layers together.
+     *
+     * @param prev the previous layer.
+     * @param next the next layer.
+     */
     public static void joinLayers(Layer prev, Layer next)
     {
         assert (prev != null && next != null);
@@ -31,6 +49,11 @@ public class Layer implements Serializable
         }
     }
 
+    /**
+     * Assigns the specified input values to the neurons of the layer.
+     *
+     * @param input the input values.
+     */
     public void assign(List<Double> input)
     {
         assert (input.size() == neurons.size());
@@ -42,6 +65,9 @@ public class Layer implements Serializable
         }
     }
 
+    /**
+     * Computes the values of the neurons of the layer.
+     */
     public void computeValues()
     {
         for (var neuron : neurons)
@@ -69,6 +95,11 @@ public class Layer implements Serializable
 //        }
     }
 
+    /**
+     * Exports the values of the neurons of the layer.
+     *
+     * @return the values of the neurons.
+     */
     public List<Double> exportValues()
     {
         List<Double> result = new ArrayList<>(neurons.size());
@@ -79,6 +110,12 @@ public class Layer implements Serializable
         return result;
     }
 
+    /**
+     * Calculates the error of the layer.
+     *
+     * @param desiredOutputs the desired outputs.
+     * @return the error of the layer.
+     */
     public double calculateError(List<Double> desiredOutputs)
     {
         double aggregateError = 0.0;
@@ -90,6 +127,11 @@ public class Layer implements Serializable
         return aggregateError;
     }
 
+    /**
+     * Computes the output gradients of the neurons of the layer.
+     *
+     * @param desiredOutputs the desired outputs.
+     */
     public void computeOutputGradients(List<Double> desiredOutputs)
     {
         assert (desiredOutputs.size() == neurons.size());
@@ -122,6 +164,9 @@ public class Layer implements Serializable
 //        }
     }
 
+    /**
+     * Computes the hidden gradients of the neurons of the layer.
+     */
     public void computeHiddenGradients()
     {
         for (var neuron : neurons)
@@ -149,6 +194,9 @@ public class Layer implements Serializable
 //        }
     }
 
+    /**
+     * Updates the weights of the neurons of the layer.
+     */
     public void updateInputs()
     {
         for (var neuron : neurons)
@@ -176,6 +224,11 @@ public class Layer implements Serializable
 //        }
     }
 
+    /**
+     * Returns the string representation of the layer.
+     *
+     * @return the string representation of the layer.
+     */
     @Override
     public String toString()
     {
@@ -190,7 +243,12 @@ public class Layer implements Serializable
 
         return description.toString();
     }
-    
+
+    /**
+     * Serializes the layer.
+     *
+     * @return the serialized layer.
+     */
     public List<List<Double>> serialize()
     {
         List<List<Double>> lists = new ArrayList<>(neurons.size());
@@ -201,12 +259,23 @@ public class Layer implements Serializable
         }
         return lists;
     }
-    
+
+    /**
+     * Provides the size of the layer.
+     *
+     * @return the size of the layer.
+     */
     public int size()
     {
         return neurons.size();
     }
-    
+
+    /**
+     * Deserializes the layer.
+     *
+     * @param weights the serialized layer.
+     * @throws Exception if the number of weights is invalid.
+     */
     public void deserialize(List<List<Double>> weights) throws Exception
     {
         if (weights.size() == neurons.size())
